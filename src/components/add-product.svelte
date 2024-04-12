@@ -6,7 +6,17 @@
   let stock = 0;
   let estado = "";
 
-  function agregarProducto() {}
+  import { insert } from "../db/product";
+  function agregarProducto() {
+    insert(nombre, precio, stock, estado == "true");
+  }
+
+  let categorys = [
+    { id: 1, name: "Electrodomésticos" },
+    { id: 2, name: "Electrónica" },
+    { id: 3, name: "Muebles" },
+    { id: 4, name: "Ropa" },
+  ];
 </script>
 
 <form on:submit|preventDefault={agregarProducto}>
@@ -19,7 +29,12 @@
 
   <div class="input">
     <label for="categoria">Categoria</label>
-    <input type="text" id="categoria" bind:value={categoria} />
+    <select bind:value={categoria}>
+      <option value="">Seleccione una categoría</option>
+      {#each categorys as category}
+        <option value={category.id}>{category.name}</option>
+      {/each}
+    </select>
   </div>
 
   <div class="input">
