@@ -3,24 +3,19 @@ import BaseLayout from "../layouts/base-layout.astro";
 import AddProduct from "../components/add-product.svelte";
 import EditProduct from "../components/edit-product.svelte";
 import X from "../components/svg/x.astro";
+import { getAll } from "../db/product";
 let numberProduct = 8;
+
+//await getAll();
 
 let productList = [
   {
-    ID: 1,
-    "Nombre de Producto": "Cafetera",
-    Categoria: "Electrodomésticos",
-    Precio: 99.99,
-    Stock: 20,
-    Estado: "Disponible",
-  },
-  {
-    ID: 2,
-    "Nombre de Producto": "Licuadora",
-    Categoria: "Electrodomésticos",
-    Precio: 49.99,
-    Stock: 15,
-    Estado: "Disponible",
+    id: 1,
+    name: "Leche GLORIA",
+    price: 1.5,
+    stock: 20,
+    active: true,
+    category: { name: "Lácteo" },
   },
 ];
 ---
@@ -57,12 +52,12 @@ let productList = [
           {
             productList.map((product) => (
               <tr>
-                <td>{product.ID}</td>
-                <td>{product["Nombre de Producto"]}</td>
-                <td>{product.Categoria}</td>
-                <td>${product.Precio.toFixed(2)}</td>
-                <td>{product.Stock}</td>
-                <td>{product.Estado}</td>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>{product.category.name}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>{product.stock}</td>
+                <td>{product.active}</td>
               </tr>
             ))
           }
