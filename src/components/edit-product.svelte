@@ -7,6 +7,10 @@
   let estado = "";
 
   function editarProducto() {}
+
+  //import { getUser } from "../db/auth";
+
+  //getUser();
 </script>
 
 <form on:submit|preventDefault={editarProducto}>
