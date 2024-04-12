@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../layouts/base-layout.astro";
+import AddProduct from "../components/add-product.svelte";
+import EditProduct from "../components/edit-product.svelte";
+import X from "../components/svg/x.astro";
+let numberProduct = 8;
+
+let productList = [
+  {
+    ID: 1,
+    "Nombre de Producto": "Cafetera",
+    Categoria: "Electrodomésticos",
+    Precio: 99.99,
+    Stock: 20,
+    Estado: "Disponible",
+  },
+  {
+    ID: 2,
+    "Nombre de Producto": "Licuadora",
+    Categoria: "Electrodomésticos",
+    Precio: 49.99,
+    Stock: 15,
+    Estado: "Disponible",
+  },
+];
+---
+
+<BaseLayout title="Productos">
+  <div class="view-product">
+    <div class="header">
+      <h2>Productos</h2>
+
+      <button id="add" onclick="viewAddForm()"> Añadir Producto</button>
+    </div>
+
+    <div class="product-list">
+      <div class="header-list">
+        <h3>Lista de Producto ({numberProduct})</h3>
+        <input type="text" name="search-product" id="search-product" />
+      </div>
+
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre de Producto</th>
+            <th>Categoria</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            /* Iterar sobre cada producto y crear una fila de tabla para cada uno */
+          }
+          {
+            productList.map((product) => (
+              <tr>
+                <td>{product.ID}</td>
+                <td>{product["Nombre de Producto"]}</td>
+                <td>{product.Categoria}</td>
+                <td>${product.Precio.toFixed(2)}</td>
+                <td>{product.Stock}</td>
+                <td>{product.Estado}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="add-form">
+    <div class="cancel" id="cancel-add">
+      <button onclick="cancelAddForm()">
+        <X />
+      </button>
+    </div>
+    <AddProduct client:load />
+  </div>
+
+  <div id="edit-form">
+    <div class="cancel" id="cancel-edit">
+      <button>
+        <X onclick="canceEditForm()" />
+      </button>
+    </div>
+    <EditProduct client:load />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  function viewAddForm() {
+    let divAdd = document.getElementById("add-form");
+
+    if (divAdd) {
+      divAdd.style.display = "flex";
+    }
+  }
+
+  function cancelAddForm() {
+    let divAdd = document.getElementById("add-form");
+
+    if (divAdd) {
+      divAdd.style.display = "none";
+    }
+  }
+
+  function canceEditForm() {
+    let divEdit = document.getElementById("edit-form");
+
+    if (divEdit) {
+      divEdit.style.display = "flex";
+    }
+  }
+</script>
+
+<style>
+  body {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .view-product {
+    padding: 1rem 2rem;
+    width: 100%;
+  }
+
+  .view-product .header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: solid 1px var(--gray);
+  }
+
+  .view-product .header-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+  }
+
+  #add-form,
+  #edit-form {
+    width: 30rem;
+    padding: 3rem 2rem;
+    display: none;
+    flex-direction: column;
+  }
+
+  .cancel {
+    width: 100%;
+    text-align: end;
+  }
+
+  .cancel button {
+    background: none;
+    padding: 0;
+  }
+</style>
